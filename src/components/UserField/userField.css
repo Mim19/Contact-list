@@ -1,4 +1,27 @@
-ul{
+ul {
   padding: 0;
+}
+.list {
   list-style: none;
+  border: 1px solid grey;
+  padding: 10px;
+  width: 300px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  display: inline-block;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.green {
+  color: green;
+}
+
+.gray {
+  color: gray;
 }
