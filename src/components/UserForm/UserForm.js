@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
+
+import { validate } from '../../config/emailValidation';
+import Alert from '../Alert/Alert';
 import EditPopup from '../Popup/EditPopup';
 import UserField from '../UserField/UserField';
 import './userForm.css';
-import * as EmailValidator from 'email-validator';
-
-class UserForm extends React.Component {
+class UserForm extends Component {
     constructor() {
         super();
         this.state = {
@@ -16,45 +17,54 @@ class UserForm extends React.Component {
             edit: false,
             isOnline: true,
             users: [],
-            editData: {},
             index: '',
+            message:''
         };
     }
 
-    nameHandler = (e) => {
-        this.setState({ name: e.target.value });
-    };
+    nameHandler = e => this.setState({ name: e.target.value });
 
-    surnameHandler = (e) => {
-        this.setState({ surname: e.target.value });
-    };
+    surnameHandler = e => this.setState({ surname: e.target.value });
 
-    phoneHandler = (e) => {
-        this.setState({ phone: e.target.value });
-    };
+    phoneHandler = e => this.setState({ phone: e.target.value });
 
-    emailHandler = (e) => {
-        this.setState({ email: e.target.value });
-    };
+    emailHandler = e => this.setState({ email: e.target.value });
 
-    photoHandler = (e) => {
-        this.setState({ photo: e.target.value });
-    };
+    photoHandler = e => this.setState({ photo: e.target.value });
 
     clickHandler = (e) => {
         e.preventDefault();
-        if (!this.state.phone || !this.state.name || !this.state.surname || !this.state.email || !this.state.photo) {
-            alert('Fill in all the fields');
+        if (!this.state.phone 
+            || !this.state.name 
+            || !this.state.surname 
+            || !this.state.email 
+            || !this.state.photo) {
+            this.setState({
+                message: 'Fill in all the fields'
+            })
             return;
         }
-        if(!EmailValidator.validate(this.state.email)){
-            alert('invalid email');
-            this.setState({email: ''});
-            return;
+
+        if(!((this.state.name.length) || (this.state.surname.length))){
+            alert('ivalid')
+            return
         }
+
+        if (!validate(this.state.email)){
+            alert('invalid e-mail address')
+            return
+        }
+
         if(this.state.phone.includes(' ')){
            alert('ivalid number');
            return;
+        }
+
+        let res = this.state.photo.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+
+        if(res == null){
+            alert('url')
+            return
         }
 
         this.setState({
@@ -70,40 +80,49 @@ class UserForm extends React.Component {
                     phone: this.state.phone,
                     email: this.state.email,
                     isOnline: this.state.isOnline,
-                    photo: this.state.photo
+                    photo: this.state.photo,
+                    index:this.state.index,
+
                 },
             ]),
         });
     };
 
     deleteHandler = (index) => {
-        let us = [...this.state.users];
+        let us = this.state.users;
         us.splice(index, 1);
         this.setState({ users: us });
     };
 
     popupHandler = (index) => {
+        console.log('index:', index)
         this.setState({
             edit: !this.state.edit,
-            editData: this.state.users[index],
             index,
         });
     };
+
     closeHandler = () => {
         this.setState({ edit: !this.state.edit });
     };
-    editHandler = (e, index, data) => {
+    
+    editHandler = (e, data) => {
         e.preventDefault();
         let newArr = [...this.state.users];
-        newArr[index] = data;
+        newArr[this.state.index] = data;
         this.setState({ users: newArr });
         this.closeHandler();
     };
+    
+    alertHandler = () => {this.setState({message:''})}
 
     render() {
         return (
             <>
-                <div className="box">
+            {
+            this.state.message && <Alert message={ this.state.message} alertHandler={this.alertHandler}/>
+            }
+                <div className="box slide-in-bottom">
                     <form className="userform">
                         <div>
                             <label className="label">Name</label>
@@ -111,6 +130,7 @@ class UserForm extends React.Component {
                                 value={this.state.name}
                                 type="text"
                                 onChange={this.nameHandler}
+                                placeholder="Enter Name"
                             />
                         </div>
                         <div>
@@ -119,24 +139,26 @@ class UserForm extends React.Component {
                                 value={this.state.surname}
                                 type="text"
                                 onChange={this.surnameHandler}
+                                placeholder="Enter Surname"
                             />
                         </div>
                         <div>
-                            <label className="label">phone</label>
+                            <label className="label">Phone</label>
                             <input
-                                pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
-                                value={this.state.phone}
-                                type="tel"
+                                type="number"
                                 id="phone"
+                                placeholder="+374 12345678"
+                                value={this.state.phone}
                                 onChange={this.phoneHandler}
                             />
                         </div>
                         <div>
-                            <label className="label">email</label>
+                            <label className="label">E-mail</label>
                             <input
                                 value={this.state.email}
                                 type="text"
                                 onChange={this.emailHandler}
+                                placeholder="Enter E-mail"
                             />
                         </div>
                         <div>
@@ -145,6 +167,7 @@ class UserForm extends React.Component {
                                 value={this.state.photo}
                                 type="text"
                                 onChange={this.photoHandler}
+                                placeholder="Enter photo url"
                             />
                         </div>
                         <div>
@@ -165,8 +188,7 @@ class UserForm extends React.Component {
                 {this.state.edit && (
                     <EditPopup
                         closeHandler={this.closeHandler}
-                        editData={this.state.editData}
-                        index={this.state.index}
+                        user={this.state.users[this.state.index]}
                         editHandler={this.editHandler}
                     />
                 )}

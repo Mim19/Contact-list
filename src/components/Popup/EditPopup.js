@@ -1,45 +1,56 @@
-import React from 'react';
+import React, {Component} from 'react';
+
 import './editPopup.css';
 
-export default class EditPopup extends React.Component {
-    constructor() {
-        super();
+
+const rx_live = /^[+-]?\d*(?:[.,]\d*)?$/;
+class EditPopup extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
-            name: '',
-            surname: '',
-            phone: '',
-            email: '',
-            photo: '',
-            // isOnline: this.props.editData.isOnline
+            name: this.props.user.name,
+            surname: this.props.user.surname,
+            phone: this.props.user.phone,
+            email: this.props.user.email,
+            photo: this.props.user.photo,
+            isOnline:this.props.user.isOnline
         };
     }
-    nameHandler = (e) => {
-        this.setState({ name: e.target.value });
+    
+    nameHandler = e => this.setState({ name: e.target.value });
+    
+    surnameHandler = e => this.setState({ surname: e.target.value });
+
+   
+    phoneHandler = e => {
+
+        if (rx_live.test(e.target.value))
+        this.setState({ phone : e.target.value });
     };
-    surnameHandler = (e) => {
-        this.setState({ surname: e.target.value });
-    };
-    phoneHandler = (e) => {
-        this.setState({ phone: e.target.value });
-    };
-    emailHandler = (e) => {
-        this.setState({ email: e.target.value });
-    };
-    photolHandler = (e) => {
-        this.setState({ photo: e.target.value });
-    };
+
+
+    emailHandler = e => this.setState({ email: e.target.value });
+
+    photolHandler = e => this.setState({ photo: e.target.value });
+
     render() {
-        console.log(this.props)
+        const { user } = this.props
+        
         return (
             <div className="popup">
                 <div className="popup_open">
                     <div className="box">
+                        <i
+                            onClick={this.props.closeHandler} 
+                            className="fas fa-times fa-lg iconClose"
+
+                        ></i>
                         <form className="userform">
                             <div>
                                 <label className="label">Name</label>
                                 <input
                                     type="text"
-                                    defaultValue={this.props.editData.name}
+                                    defaultValue={user.name}
                                     onChange={this.nameHandler}
                                 />
                             </div>
@@ -47,7 +58,7 @@ export default class EditPopup extends React.Component {
                                 <label className="label">Surname</label>
                                 <input
                                     type="text"
-                                    defaultValue={this.props.editData.surname}
+                                    defaultValue={user.surname}
                                     onChange={this.surnameHandler}
                                 />
                             </div>
@@ -55,7 +66,11 @@ export default class EditPopup extends React.Component {
                                 <label className="label">phone</label>
                                 <input
                                     type="number"
-                                    defaultValue={this.props.editData.phone}
+                                    id="phone"
+                                    maxLength={9}
+                                    pattern="[+-]?\d+(?:[.,]\d+)?"
+                                    placeholder="Enter amount"
+                                    defaultValue={Number(user.phone)}
                                     onChange={this.phoneHandler}
                                 />
                             </div>
@@ -63,7 +78,7 @@ export default class EditPopup extends React.Component {
                                 <label className="label">email</label>
                                 <input
                                     type="email"
-                                    defaultValue={this.props.editData.email}
+                                    defaultValue={user.email}
                                     onChange={this.emailHandler}
                                 />
                             </div>
@@ -71,7 +86,7 @@ export default class EditPopup extends React.Component {
                                 <label className="label">Photo</label>
                                 <input
                                     type="text"
-                                    defaultValue={this.props.editData.photo}
+                                    defaultValue={user.photo}
                                     onChange={this.photolHandler}
                                 />
                             </div>
@@ -81,7 +96,6 @@ export default class EditPopup extends React.Component {
                                     onClick={(e) =>
                                         this.props.editHandler(
                                             e,
-                                            this.props.index,
                                             this.state
                                         )
                                     }
@@ -90,13 +104,11 @@ export default class EditPopup extends React.Component {
                                 </button>
                             </div>
                         </form>
-                        <i
-                            onClick={this.props.closeHandler}
-                            className="fas fa-times fa-lg icon"
-                        ></i>
                     </div>
                 </div>
             </div>
         );
     }
 }
+
+export default EditPopup;
