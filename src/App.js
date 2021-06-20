@@ -1,38 +1,26 @@
-import React, {Component} from "react";
+import React, { Component } from 'react';
 
-import EditPopup from "./components/Popup/EditPopup";
-import UserForm from "./components/UserForm/UserForm";
+import UserForm from './components/UserForm/UserForm';
 
 class App extends Component {
   constructor(){
     super()
-    this.state= {
-      down:true,
-      up:false
+    this.state = {
+      isOpen: false
     }
   }
-  showHandler = () => { this.setState({
-    down: !this.state.down,
-    up: !this.state.up
-  })}
+
+  showHandler = () => this.setState({
+    isOpen: !this.state.isOpen
+  });
 
   render(){
     return(
       <div className="container">
-
         <h1>Contact List</h1>
-        {
-          this.state.down && <i className="fas fa-chevron-down fa-lg" onClick={this.showHandler}></i>
-        }
-
-        {
-          this.state.up && <i className="fas fa-chevron-up fa-lg up" onClick={this.showHandler}></i>
-        }
-
-        {
-          !this.state.down && <UserForm/>
-        }
-          </div>
+          <i className = {`fas fa-lg fa-chevron-${this.state.isOpen ? "down" : "up"}`}  onClick={this.showHandler} /> 
+          { this.state.isOpen && <UserForm/> } 
+      </div>
     )
   }
 }

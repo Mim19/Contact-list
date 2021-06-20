@@ -8,17 +8,20 @@ class UserList extends Component{
     }
 
     render(){
-        const {index, user, popupHandler, deleteHandler} = this.props
+        const {
+            index, 
+            user,
+            popupHandler, 
+            deleteHandler} = this.props
         return(
             <li className="list scale-in-center" key={index}>
                 <div>
-                        {user.isOnline ? <i className="fas fa-circle green" /> : <i className="fas fa-circle gray"></i>}
+                    <i className = {`fas fa-circle ${user.isOnline ? "green" : "gray"}`}/> 
                 </div>
                 <div>
                     <img 
                         src={user.photo} 
                         alt="image" 
-                        style={{height: "50px"}} 
                     />
                 </div>
                 <div>
@@ -30,14 +33,14 @@ class UserList extends Component{
                 <div>
                 <i 
                     onClick={() => popupHandler(index)}
-                    className="fas fa-user-edit fa-lg icon" 
-                    />
+                    className="fas fa-user-edit fa-lg icon"    
+                />
                 <i
                     onClick={() => deleteHandler(index)}
                     className="fas fa-user-times fa-lg icon"
-                    />
-            </div>
-        </li>
+                />
+                </div>
+            </li>
         )
     }
 }

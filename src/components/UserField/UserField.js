@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 
-import UserList from '../UserList/UserList';
 import {v4 as uuidv4} from 'uuid';
+
+import UserList from '../UserList/UserList';
+
 import './userField.css';
 
 class UserField extends Component {
@@ -15,7 +17,7 @@ class UserField extends Component {
             <ul>
                 {users.map((item, index) => (
                     <UserList key={uuidv4()} user={item} index={index} deleteHandler={ () => this.props.deleteHandler(index)} popupHandler={()=>  this.props.popupHandler(index)}/>
-                )
+                    )
                 )}
             </ul>
         );

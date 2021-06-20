@@ -20,7 +20,6 @@ export const validate  =  (email) => {
     return part.length > 63;
   })) return false;
 
-
   if (!tester.test(email)) return false;
 
   return true;

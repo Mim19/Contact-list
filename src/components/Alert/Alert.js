@@ -1,19 +1,22 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import './alert.css'
+import './alert.css';
 
 class Alert extends Component{
     constructor(){
         super()
     }
+    
     render(){
         return(
-            <div className="alert alert-primary scale-in-center" role="alert" onClick={this.props.alertHandler}>
-                <i className="fas fa-info-circle fa-lg mr-4"></i>
+            <div className="alert alert-primary scale-in-center" 
+            role="alert" 
+            onClick={this.props.alertHandler}> 
+                <i className="fas fa-info-circle fa-lg mr-4" />
                  {this.props.message}
             </div>
         )
     }
 }
 
-export default Alert
+export default Alert;
