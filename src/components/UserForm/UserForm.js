@@ -28,7 +28,13 @@ class UserForm extends Component {
     }
 
     async clickHandler(e, data) {
-        const { name, surname, email, photo, phone } = data;
+        const { 
+            name, 
+            surname, 
+            email, 
+            photo, 
+            phone, 
+        } = data;
         e.preventDefault();
 
         if (!phone 
