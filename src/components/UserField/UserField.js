@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import {v4 as uuidv4} from 'uuid';
 
@@ -16,7 +16,12 @@ class UserField extends Component {
         return (
             <ul>
                 {users.map((item, index) => (
-                    <UserList key={uuidv4()} user={item} index={index} deleteHandler={ () => this.props.deleteHandler(index)} popupHandler={()=>  this.props.popupHandler(index)}/>
+                    <UserList 
+                        key={uuidv4()} 
+                        user={item} 
+                        index={index} 
+                        deleteHandler={ () => this.props.deleteHandler(index)} 
+                        popupHandler={()=>  this.props.popupHandler(index)}/>
                     )
                 )}
             </ul>

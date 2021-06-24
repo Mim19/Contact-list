@@ -18,10 +18,17 @@ class ContactForm extends Component {
     };
 
     render() {
-        const { clickHandler, action, cancelHandler, user } = this.props;
+        const { 
+            clickHandler, 
+            action, 
+            cancelHandler, 
+            user,
+        } = this.props;
+
         return (
             <form
-                className="userform" onSubmit={(e) => clickHandler(e, this.state)}
+                className="userform" 
+                onSubmit={(e) => clickHandler(e, this.state)}
             >
                 {inputs.map((input) => {
                     let { name } = input;
@@ -46,7 +53,7 @@ class ContactForm extends Component {
                     </div>
                 )}
                 <div>
-                    <button className="btn">{action}</button>
+                    <button className="btn">{ action }</button>
                 </div>
             </form>
         );

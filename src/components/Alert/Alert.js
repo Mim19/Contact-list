@@ -9,11 +9,13 @@ class Alert extends Component{
     
     render(){
         return(
-            <div className="alert alert-primary scale-in-center" 
-            role="alert" 
-            onClick={this.props.alertHandler}> 
+            <div 
+                className="alert alert-primary scale-in-center" 
+                role="alert" 
+                onClick={this.props.alertHandler}
+            > 
                 <i className="fas fa-info-circle fa-lg mr-4" />
-                 {this.props.message}
+                {this.props.message}
             </div>
         )
     }

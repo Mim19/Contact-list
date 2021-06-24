@@ -10,7 +10,12 @@ class EditPopup extends Component {
     }
 
     render() {
-        const { closeHandler, editHandler, action } = this.props;
+        const { 
+            closeHandler, 
+            editHandler, 
+            action,
+        } = this.props;
+        
         return (
             <div className="popup">
                 <div className="popup_open">

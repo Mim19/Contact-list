@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import './userList.css';
 
@@ -12,9 +12,14 @@ class UserList extends Component{
             index, 
             user,
             popupHandler, 
-            deleteHandler} = this.props
+            deleteHandler,
+        } = this.props;
+            
         return(
-            <li className="list scale-in-center" key={index}>
+            <li 
+                className="list scale-in-center"
+                key={index}
+             >
                 <div>
                     <i className = {`fas fa-circle ${user.isOnline ? "green" : "gray"}`}/> 
                 </div>

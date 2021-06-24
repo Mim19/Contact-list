@@ -99,16 +99,20 @@ class UserForm extends Component {
     };
 
     closeHandler = () => {
-        this.setState({ action: "Add"});
-        this.setState({ edit: !this.state.edit });
+        this.setState({ 
+            action: "Add",
+            edit: !this.state.edit,
+        });
     };
 
     editHandler = (e, data) => {
         e.preventDefault();
         let newArr = [...this.state.users];
         newArr[this.state.index] = data;
-        this.setState({ users: newArr });
-        this.setState({ action: "Add"});
+        this.setState({ 
+            users: newArr,
+            action: "Add",
+        });
         this.closeHandler();
     };
 
