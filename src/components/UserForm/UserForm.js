@@ -57,7 +57,8 @@ class UserForm extends Component {
             return;
         }
 
-        await urlValidate(photo).then(res => this.setState({isValideUrl: res}))
+        const res = await urlValidate(photo);
+        this.setState({isValideUrl: res});
         
         if (this.state.isValideUrl !== 'success') {
             this.setState({ message: errorMessages.photo });
